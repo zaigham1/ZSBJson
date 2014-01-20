@@ -269,12 +269,15 @@ static char ctrl[0x22];
             return NO;
         }
         
-        if (![v isKindOfClass:[NSNull class]] && !self.allowNSNull) {
-        
+        if (self.allowNSNull) {
+            
             [*o setObject:v forKey:k];
             
-        }
-        
+        }else
+            if (![v isKindOfClass:[NSNull class]]) {
+                
+                [*o setObject:v forKey:k];
+            }
         
         skipWhitespace(c);
         if (*c == ',' && c++) {
